@@ -2,6 +2,21 @@
 
 set -e -x
 
+if [ -r /etc/redhat-release ]; then
+	YUM=true
+else
+	YUM=
+fi
+
+if [ "${YUM}" ]; then
+	yum install -y git
+else
+	apt-get install git
+fi
+
+# Put as much config as possible in single directory
+[ -d ${HOME}/.config ] || mkdir ${HOME}/.config
+
 echo '# Personal login settings' > ${HOME}/.personalrc
 echo 'source ${HOME}/.personalrc' >> ${HOME}/.bashrc
 
