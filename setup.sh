@@ -9,9 +9,9 @@ else
 fi
 
 if [ "${YUM}" ]; then
-	yum install -y git
+	sudo yum install -y git
 else
-	apt-get install git
+	sudo apt-get install git
 fi
 
 # Put as much config as possible in single directory
