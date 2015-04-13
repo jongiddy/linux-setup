@@ -40,3 +40,18 @@ EOF
 cp liquid.ps1 ${HOME}/.config/liquidprompt/liquid.ps1
 cp liquidpromptrc ${HOME}/.config/liquidpromptrc
 
+# Add Vagrant bash completion
+VAGRANT_BASH_HOME=${HOME}/vagrant-bash-completion
+if [ -r ${VAGRANT_BASH_HOME}/etc/bash_completion.d/vagrant ]; then
+	(cd ${VAGRANT_BASH_HOME}; git pull)
+else
+	while [ -d ${VAGRANT_BASH_HOME} ]; do
+		VAGRANT_BASH_HOME=${VAGRANT_BASH_HOME}/vagrant-bash-completion
+	done
+	git clone https://github.com/kura/vagrant-bash-completion.git ${VAGRANT_BASH_HOME}
+fi
+
+cat >> ${HOME}/.personalrc <<EOF
+# Load Vagrant bash completion
+source ${VAGRANT_BASH_HOME}/etc/bash_completion.d/vagrant
+EOF
