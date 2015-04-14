@@ -26,7 +26,9 @@ CONFIG=${HOME}/.config
 
 PERSONALRC=${CONFIG}/personalrc
 echo '# Personal login settings' > ${PERSONALRC}
-echo "source ${PERSONALRC}" >> ${HOME}/.bashrc
+line="source ${PERSONALRC}"
+grep -F "${line}" ${HOME}/.bashrc || echo "${line}" >> ${HOME}/.bashrc
+grep -F "${line}" ${HOME}/.zshrc || echo "${line}" >> ${HOME}/.zshrc
 
 #
 # Install liquidprompt
@@ -69,5 +71,5 @@ fi
 
 cat >> ${PERSONALRC} <<EOF
 # Load Vagrant bash completion
-source ${VAGRANT_BASH_HOME}/etc/bash_completion.d/vagrant
+[ -z "${BASH_VERSION}" ] || source ${VAGRANT_BASH_HOME}/etc/bash_completion.d/vagrant
 EOF
