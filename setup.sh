@@ -8,10 +8,12 @@ else
 	YUM=
 fi
 
-if [ "${YUM}" ]; then
-	sudo yum install -y git
-else
-	sudo apt-get install git
+if [ ! `command -v git` ]; then
+	if [ "${YUM}" ]; then
+		sudo yum install -y git
+	else
+		sudo apt-get -y install git
+	fi
 fi
 
 # To keep this stuff out of my way, install packages in ~/.install and the
