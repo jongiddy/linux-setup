@@ -38,7 +38,9 @@ else
 	while [ -d ${LIQUIDPROMPT_HOME} ]; do
 		LIQUIDPROMPT_HOME=${LIQUIDPROMPT_HOME}/liquidprompt
 	done
-	git clone https://github.com/nojhan/liquidprompt.git ${LIQUIDPROMPT_HOME}
+	# Use my fork, which supports LP_TTYN
+	# git clone https://github.com/nojhan/liquidprompt.git ${LIQUIDPROMPT_HOME}
+	git clone https://github.com/jongiddy/liquidprompt.git ${LIQUIDPROMPT_HOME}
 fi
 
 cat >> ${PERSONALRC} <<EOF

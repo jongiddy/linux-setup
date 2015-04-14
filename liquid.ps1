@@ -33,5 +33,5 @@ LP_PS1="${LP_PS1}${LP_VENV}${LP_PROXY}${LP_VCS}${LP_MARK_PREFIX}${LP_MARK}"
 LP_PS1="${LP_PS1_PREFIX}${LP_PS1}${LP_PS1_POSTFIX}"
 
 # Add a title
-LP_TITLE="$(_lp_title "\l ${LP_VENV} ${LP_USER}${LP_HOST}${LP_PERM}${LP_PWD}")"
+LP_TITLE="$(_lp_title "${LP_TTYN}${LP_VENV} ${LP_USER}${LP_HOST}${LP_PERM}${LP_PWD}")"
 LP_PS1="${LP_TITLE}${LP_PS1}"
