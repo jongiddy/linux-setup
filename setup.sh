@@ -14,14 +14,22 @@ else
 	sudo apt-get install git
 fi
 
-# Put as much config as possible in single directory
-[ -d ${HOME}/.config ] || mkdir ${HOME}/.config
+# To keep this stuff out of my way, install packages in ~/.install and the
+# configuration in ~/.config.
+INSTALL=${HOME}/.install
+CONFIG=${HOME}/.config
 
-echo '# Personal login settings' > ${HOME}/.personalrc
-echo 'source ${HOME}/.personalrc' >> ${HOME}/.bashrc
+[ -d ${INSTALL} ] || mkdir ${INSTALL}
+[ -d ${CONFIG} ] || mkdir ${CONFIG}
 
+PERSONALRC=${CONFIG}/personalrc
+echo '# Personal login settings' > ${PERSONALRC}
+echo "source ${PERSONALRC}" >> ${HOME}/.bashrc
+
+#
 # Install liquidprompt
-LIQUIDPROMPT_HOME=${HOME}/liquidprompt
+#
+LIQUIDPROMPT_HOME=${INSTALL}/liquidprompt
 if [ -r ${LIQUIDPROMPT_HOME}/liquidprompt ]; then
 	(cd ${LIQUIDPROMPT_HOME}; git pull)
 else
@@ -31,17 +39,21 @@ else
 	git clone https://github.com/nojhan/liquidprompt.git ${LIQUIDPROMPT_HOME}
 fi
 
-cat >> ${HOME}/.personalrc <<EOF
+cat >> ${PERSONALRC} <<EOF
 # Only load Liquid Prompt in interactive shells, not from a script or from scp
 [[ \$- = *i* ]] && source ${LIQUIDPROMPT_HOME}/liquidprompt
 EOF
 
-[ -d ${HOME}/.config/liquidprompt ] || mkdir ${HOME}/.config/liquidprompt
-cp liquid.ps1 ${HOME}/.config/liquidprompt/liquid.ps1
+[ -d ${CONFIG}/liquidprompt ] || mkdir ${CONFIG}/liquidprompt
+cp liquid.ps1 ${CONFIG}/liquidprompt/liquid.ps1
+# Use ${HOME}/.config explicitly, since it is a fixed location in liquidprompt
+[ -d ${HOME}/.config ] || mkdir ${HOME}/.config
 cp liquidpromptrc ${HOME}/.config/liquidpromptrc
 
+#
 # Add Vagrant bash completion
-VAGRANT_BASH_HOME=${HOME}/vagrant-bash-completion
+#
+VAGRANT_BASH_HOME=${INSTALL}/vagrant-bash-completion
 if [ -r ${VAGRANT_BASH_HOME}/etc/bash_completion.d/vagrant ]; then
 	(cd ${VAGRANT_BASH_HOME}; git pull)
 else
@@ -51,7 +63,7 @@ else
 	git clone https://github.com/kura/vagrant-bash-completion.git ${VAGRANT_BASH_HOME}
 fi
 
-cat >> ${HOME}/.personalrc <<EOF
+cat >> ${PERSONALRC} <<EOF
 # Load Vagrant bash completion
 source ${VAGRANT_BASH_HOME}/etc/bash_completion.d/vagrant
 EOF
