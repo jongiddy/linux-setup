@@ -1,6 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e -x
+
+SETUP_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 if [ -r /etc/redhat-release ]; then
 	YUM=true
@@ -51,10 +53,10 @@ cat >> ${PERSONALRC} <<EOF
 EOF
 
 [ -d ${CONFIG}/liquidprompt ] || mkdir ${CONFIG}/liquidprompt
-cp liquid.ps1 ${CONFIG}/liquidprompt/liquid.ps1
+cp ${SETUP_DIR}/liquid.ps1 ${CONFIG}/liquidprompt/liquid.ps1
 # Use ${HOME}/.config explicitly, since it is a fixed location in liquidprompt
 [ -d ${HOME}/.config ] || mkdir ${HOME}/.config
-cp liquidpromptrc ${HOME}/.config/liquidpromptrc
+cp ${SETUP_DIR}/liquidpromptrc ${HOME}/.config/liquidpromptrc
 
 #
 # Add Vagrant bash completion
