@@ -27,7 +27,7 @@
 # Remember that most features come with their corresponding colors,
 # see the README.
 
-LINE1="${LP_ERR}${LP_RUNTIME}${LP_TIME}${LP_BATT}${LP_LOAD}${LP_JOBS}${LP_PROXY}${LP_VENV}${LP_VCS}"
+LINE1="${LP_VENV}${LP_VCS}${LP_ERR}${LP_RUNTIME}${LP_TIME}${LP_BATT}${LP_LOAD}${LP_JOBS}${LP_PROXY}"
 LINE2="${LP_USER}${LP_HOST}${LP_PERM}${LP_PWD}${LP_MARK_PREFIX}${LP_MARK}"
 LP_PS1="${LINE1}\n${LINE2}"
 
