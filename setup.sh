@@ -10,6 +10,23 @@ else
 	YUM=
 fi
 
+source /etc/os-release
+
+# Add Google DNS servers as backup to ISP DNS servers
+case "${ID}" in
+ubuntu)
+	gdns_absent=
+	grep -q 'pend domain-name-servers 8.8.' /etc/dhcp/dhclient.conf || gdns_absent=1
+	if [ "${gdns_absent}" ]; then
+		cp /etc/dhcp/dhclient.conf /tmp/$$.tmp
+		echo 'append domain-name-servers 8.8.4.4;' >> /tmp/$$.tmp
+		echo 'append domain-name-servers 8.8.8.8;' >> /tmp/$$.tmp
+		sudo cp /tmp/$$.tmp /etc/dhcp/dhclient.conf
+		rm /tmp/$$.tmp
+	fi
+	;;
+esac
+
 if [ ! `command -v git` ]; then
 	if [ "${YUM}" ]; then
 		sudo yum install -y git
