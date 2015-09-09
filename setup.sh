@@ -21,7 +21,7 @@ ubuntu)
 		cp /etc/dhcp/dhclient.conf /tmp/$$.tmp
 		echo 'append domain-name-servers 8.8.4.4;' >> /tmp/$$.tmp
 		echo 'append domain-name-servers 8.8.8.8;' >> /tmp/$$.tmp
-		sudo cp /tmp/$$.tmp /etc/dhcp/dhclient.conf
+		sudo cp /tmp/$$.tmp /etc/dhcp/dhclient.conf | true  # don't fail if no sudo
 		rm /tmp/$$.tmp
 	fi
 	;;
