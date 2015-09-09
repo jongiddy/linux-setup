@@ -35,6 +35,8 @@ if [ ! `command -v git` ]; then
 	fi
 fi
 git config --global push.default simple
+git config --global user.name "Jonathan Giddy"
+git config --global user.email jongiddy@gmail.com
 
 # To keep this stuff out of my way, install packages in ~/.install and the
 # configuration in ~/.config.
