@@ -34,6 +34,7 @@ if [ ! `command -v git` ]; then
 		sudo apt-get -y install git
 	fi
 fi
+git config --global push.default simple
 
 # To keep this stuff out of my way, install packages in ~/.install and the
 # configuration in ~/.config.
