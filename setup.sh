@@ -33,12 +33,15 @@ if [ ! `command -v git` ]; then
 	if [ "${YUM}" ]; then
 		sudo yum install -y git
 	else
-		sudo apt-get -y install git
+		sudo apt -y install git
 	fi
 fi
 git config --global push.default simple
 git config --global user.name "Jonathan Giddy"
+# Make git prompt for email address for each repo
+# Set it first to ensure unset does not exit with failure
 git config --global user.email jongiddy@gmail.com
+git config --global --unset user.email
 
 # To keep this stuff out of my way, install packages in ~/.install and the
 # configuration in ~/.config.
@@ -65,8 +68,7 @@ else
 		LIQUIDPROMPT_HOME=${LIQUIDPROMPT_HOME}/liquidprompt
 	done
 	# Use my fork, which supports LP_TTYN
-	# git clone https://github.com/nojhan/liquidprompt.git ${LIQUIDPROMPT_HOME}
-	git clone https://github.com/jongiddy/liquidprompt.git ${LIQUIDPROMPT_HOME}
+	git clone https://github.com/nojhan/liquidprompt.git ${LIQUIDPROMPT_HOME}
 fi
 
 cat >> ${PERSONALRC} <<EOF
