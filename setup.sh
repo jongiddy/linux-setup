@@ -22,43 +22,55 @@ if [ -r /etc/os-release ]; then
 			cp /etc/dhcp/dhclient.conf /tmp/$$.tmp
 			echo 'append domain-name-servers 8.8.4.4;' >> /tmp/$$.tmp
 			echo 'append domain-name-servers 8.8.8.8;' >> /tmp/$$.tmp
-			sudo cp /tmp/$$.tmp /etc/dhcp/dhclient.conf | true  # don't fail if no sudo
+			sudo cp /tmp/$$.tmp /etc/dhcp/dhclient.conf
 			rm /tmp/$$.tmp
 		fi
 		;;
 	esac
-        # Add SublimeText
-        case "${ID}" in
-        ubuntu)
+
+	# Add SublimeText
+	case "${ID}" in
+	ubuntu)
 		if [ ! -r /usr/bin/subl ]
 		then
 			wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
-			sudo apt-get install apt-transport-https
+			sudo apt-get install -y apt-transport-https
 			if [ ! -r /etc/apt/sources.list.d/sublime-text.list ]
 			then
 				echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
-				sudo apt update
+				sudo apt-get update
 			fi
-			sudo apt install -y sublime-text
+			sudo apt-get install -y sublime-text
 		fi
-                ;;
-        esac
+		;;
+	esac
 
-fi
-
-if [ ! `command -v git` ]; then
-	if [ "${YUM}" ]; then
-		sudo yum install -y git
-	else
-		sudo apt -y install git
+	# Add git
+	if [ ! `command -v git` ]; then
+		case "${ID}" in
+		ubuntu)
+			sudo apt-get install -y git meld
+			;;
+		centos)
+			sudo yum install -y git meld
+			;;
+		esac
 	fi
 fi
+
 git config --global push.default simple
 git config --global user.name "Jonathan Giddy"
 # Make git prompt for email address for each repo
 # Set it first to ensure unset does not exit with failure
 git config --global user.email jongiddy@gmail.com
 git config --global --unset user.email
+
+if [ -r /usr/bin/meld ]; then
+	git config --global merge.tool /usr/bin/meld
+fi
+if [ -r /usr/bin/subl ]; then
+	git config --global core.editor "/usr/bin/subl --wait"
+fi
 
 # To keep this stuff out of my way, install packages in ~/.install and the
 # configuration in ~/.config.
